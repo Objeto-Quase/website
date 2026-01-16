@@ -222,61 +222,23 @@ a {
   flex-wrap: wrap;
 }
 
-// Releases Grid
-.releases-grid {
+// Spotify Embeds
+.spotify-artist {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.spotify-releases {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
-.release-card {
-  background-color: $bg-secondary;
-  border-radius: 8px;
+.spotify-embed {
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.3s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-
-  .release-cover {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-
-    &.placeholder {
-      background: linear-gradient(135deg, $border-color, $bg-color);
-    }
-  }
-
-  .release-info {
-    padding: 1.5rem;
-
-    h3 {
-      font-size: 1.125rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .release-year,
-    .release-type {
-      display: inline-block;
-      font-size: 0.875rem;
-      color: $text-muted;
-      margin-right: 1rem;
-    }
-
-    .release-links {
-      margin-top: 1rem;
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-
-      a {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-      }
-    }
-  }
 }
 
 // Bandsintown Widget

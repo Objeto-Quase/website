@@ -1,13 +1,19 @@
-# Lista de lançamentos musicais
-# Adicionar novos lançamentos aqui
+# Configuração do Spotify para a secção de música
 #
-# Exemplo:
-# - title: "Nome do Álbum"
-#   year: 2024
-#   type: "Álbum" # ou "EP", "Single"
-#   cover: "/assets/images/album-cover.jpg"
-#   links:
-#     - platform: "Spotify"
-#       url: "https://open.spotify.com/..."
-#     - platform: "Apple Music"
-#       url: "https://music.apple.com/..."
+# artist_id: ID do artista no Spotify (da URL do artista)
+# releases: Lista de lançamentos individuais
+#   - title: Nome do álbum/single
+#     spotify_id: ID do álbum ou single no Spotify
+#     type: "album" ou "single"
+
+# ID do artista Objeto Quase no Spotify
+artist_id: "1xHVHP3gJZynDdb7PFmpow"
+
+# Lançamentos individuais (adicionar aqui os IDs do Spotify)
+# releases:
+#   - title: "Nome do Álbum"
+#     spotify_id: "album_id_here"
+#     type: "album"
+#   - title: "Nome do Single"
+#     spotify_id: "single_id_here"
+#     type: "single"

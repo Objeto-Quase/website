@@ -2,30 +2,36 @@
   <div class="container">
     <h2 class="section-title">Música</h2>
 
-    {% if site.data.musica %}
-    <div class="releases-grid">
-      {% for release in site.data.musica %}
-      <article class="release-card">
-        {% if release.cover %}
-        <img src="{{ release.cover | relative_url }}" alt="{{ release.title }}" class="release-cover">
-        {% else %}
-        <div class="release-cover placeholder"></div>
-        {% endif %}
-        <div class="release-info">
-          <h3>{{ release.title }}</h3>
-          <span class="release-year">{{ release.year }}</span>
-          <span class="release-type">{{ release.type }}</span>
-          {% if release.links %}
-          <div class="release-links">
-            {% for link in release.links %}
-            <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">{{ link.platform }}</a>
-            {% endfor %}
-          </div>
-          {% endif %}
-        </div>
-      </article>
+    {% if site.data.musica.artist_id %}
+    <!-- Artist Profile Embed -->
+    <div class="spotify-artist">
+      <iframe
+        src="https://open.spotify.com/embed/artist/{{ site.data.musica.artist_id }}?theme=0"
+        width="100%"
+        height="352"
+        frameBorder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <!-- Individual Releases -->
+    {% if site.data.musica.releases %}
+    <div class="spotify-releases">
+      {% for release in site.data.musica.releases %}
+      <div class="spotify-embed">
+        <iframe
+          src="https://open.spotify.com/embed/{{ release.type }}/{{ release.spotify_id }}?theme=0"
+          width="100%"
+          height="352"
+          frameBorder="0"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy">
+        </iframe>
+      </div>
       {% endfor %}
     </div>
+    {% endif %}
     {% else %}
     <p class="coming-soon">Novidades em breve...</p>
     {% endif %}
