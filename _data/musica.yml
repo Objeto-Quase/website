@@ -9,8 +9,8 @@
 # ID do artista Objeto Quase no Spotify
 artist_id: "1xHVHP3gJZynDdb7PFmpow"
 
-# Lançamentos individuais
-releases:
-  - title: "Objeto Quase"
-    spotify_id: "6PobExZ6jgXW7PX5aE1i67"
-    type: "album"
+# Lançamentos individuais (adicionar aqui os IDs do Spotify)
+# releases:
+#   - title: "Nome do Álbum"
+#     spotify_id: "album_id_here"
+#     type: "album"
