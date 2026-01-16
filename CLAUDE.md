@@ -45,7 +45,20 @@ Each file contains commented examples showing the expected format.
 
 ### Bandsintown Integration
 
-Concert dates are fetched automatically from Bandsintown using their Events Widget. The widget is configured in `_includes/sections/concertos.html` with artist ID `15551827`. To customize the widget appearance, modify the `data-*` attributes. See [Bandsintown Widget Customization](https://artists.bandsintown.com/support/widget-customization) for available options.
+Concert dates are fetched automatically from Bandsintown using their Events Widget. The widget is configured in `_includes/sections/concertos.html` with artist ID `15551827`. See [Bandsintown Widget Customization](https://artists.bandsintown.com/support/widget-customization) for available options.
+
+**Widget styling must match site theme variables:**
+
+| Widget Attribute | SCSS Variable | Current Value |
+|-----------------|---------------|---------------|
+| `data-text-color` | `$text-color` | #f5f5f5 |
+| `data-link-color` | `$accent-color` | #c9a227 |
+| `data-link-text-color` | `$bg-color` | #0a0a0a |
+| `data-separator-color` | `$border-color` | #2a2a2a |
+| `data-background-color` | transparent | rgba(0,0,0,0) |
+| `data-font` | font-family | Inter |
+
+When updating theme colors in `assets/css/main.scss`, also update the corresponding widget attributes in `_includes/sections/concertos.html`.
 
 ### Styling
 
