@@ -38,11 +38,14 @@ Single-page website with anchor navigation. All sections are included in `index.
 
 Content is managed through YAML files in `_data/`:
 - `musica.yml` - Albums and releases
-- `concertos.yml` - Concert dates
 - `merch.yml` - Merchandise items
 - `social.yml` - Social media links
 
 Each file contains commented examples showing the expected format.
+
+### Bandsintown Integration
+
+Concert dates are fetched automatically from Bandsintown using their Events Widget. The widget is configured in `_includes/sections/concertos.html` with artist ID `15551827`. To customize the widget appearance, modify the `data-*` attributes. See [Bandsintown Widget Customization](https://artists.bandsintown.com/support/widget-customization) for available options.
 
 ### Styling
 

@@ -279,73 +279,10 @@ a {
   }
 }
 
-// Concerts List
-.concerts-list {
+// Bandsintown Widget
+.bandsintown-widget {
   max-width: 800px;
   margin: 0 auto;
-}
-
-.concert-item {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid $border-color;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  .concert-date {
-    text-align: center;
-    min-width: 70px;
-
-    .day {
-      display: block;
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 1;
-    }
-
-    .month {
-      display: block;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      color: $accent-color;
-    }
-
-    .year {
-      display: block;
-      font-size: 0.75rem;
-      color: $text-muted;
-    }
-  }
-
-  .concert-info {
-    flex: 1;
-
-    .concert-venue {
-      font-size: 1.125rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .concert-location {
-      color: $text-muted;
-      font-size: 0.875rem;
-    }
-  }
-
-  .concert-action {
-    .status {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      color: $text-muted;
-
-      &.esgotado {
-        color: #e74c3c;
-      }
-    }
-  }
 }
 
 // Merch Grid
@@ -511,19 +448,6 @@ a {
   .about-content {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-
-  .concert-item {
-    flex-wrap: wrap;
-    gap: 1rem;
-
-    .concert-date {
-      min-width: auto;
-    }
-
-    .concert-action {
-      width: 100%;
-    }
   }
 
   .footer-content {

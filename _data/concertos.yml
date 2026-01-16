@@ -1,9 +1,0 @@
-# Lista de concertos
-# Adicionar novos concertos aqui
-#
-# Exemplo:
-# - date: 2024-12-15
-#   venue: "Coliseu dos Recreios"
-#   city: "Lisboa, Portugal"
-#   ticket_url: "https://..."
-#   status: "" # deixar vazio, "esgotado", ou outro
