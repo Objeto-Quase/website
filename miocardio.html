@@ -1,0 +1,452 @@
+---
+layout: null
+permalink: /miocardio
+---
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miocárdio - Objeto Quase</title>
+    <meta name="description" content="Descobre o teu cartão do amor com o quiz do Miocárdio">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #e8a0b5; /* muted dusty pink */
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            color: #000;
+            padding: 20px;
+            /* lo-fi noise texture */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            background-color: #f5e1e7; /* slightly off-white pink */
+            border: 4px solid #c44d78;
+            padding: 30px 20px;
+            position: relative;
+            /* slight imperfection */
+            box-shadow: 3px 3px 0 #00000033;
+        }
+
+        /* Ugly hearts scattered around */
+        .heart {
+            position: absolute;
+            color: #c44d78; /* muted red/pink */
+            font-size: 30px;
+            font-family: Arial, sans-serif;
+            opacity: 0.7;
+        }
+        .heart-1 { top: -15px; left: 10px; transform: rotate(-20deg); }
+        .heart-2 { top: -15px; right: 10px; transform: rotate(15deg); }
+        .heart-3 { bottom: -15px; left: 20px; transform: rotate(10deg); }
+        .heart-4 { bottom: -15px; right: 20px; transform: rotate(-10deg); }
+        .heart-5 { top: 50%; left: -20px; }
+        .heart-6 { top: 50%; right: -20px; }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .title {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: 2.5rem;
+            color: #a83a5c;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            -webkit-text-stroke: 1px #5a2a3a;
+            text-shadow: 2px 2px 0 #f5e1e7;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #8a4a60;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 0.95rem;
+            color: #6a4a5a;
+            margin-bottom: 25px;
+        }
+
+        .question-number {
+            font-family: Arial, sans-serif;
+            font-size: 0.8rem;
+            color: #7a6a70;
+            margin-bottom: 10px;
+            text-transform: lowercase;
+        }
+
+        .question-text {
+            font-family: Impact, 'Arial Black', sans-serif;
+            font-size: 1.5rem;
+            color: #8a4a60;
+            margin-bottom: 25px;
+            line-height: 1.3;
+            text-transform: none; /* less shouty */
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 1.3rem;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+            border: 3px solid #000;
+            cursor: pointer;
+            margin: 12px 0;
+            text-decoration: none;
+            font-weight: bold;
+            min-height: 56px; /* large touch target */
+            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
+            touch-action: manipulation; /* faster taps on mobile */
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .btn-start {
+            background-color: #c44d78;
+            color: #FFF;
+            font-family: Impact, sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            min-height: 60px;
+            border-color: #8a3355;
+        }
+
+        .btn-positive {
+            background-color: #8fbc8f; /* muted sage green */
+            color: #2d4a2d;
+            border-color: #5a7a5a;
+        }
+
+        .btn-negative {
+            background-color: #d4a5a5; /* muted dusty rose */
+            color: #6b3a3a;
+            border-color: #a07070;
+        }
+
+        /* Result screen */
+        .result-title {
+            font-family: Impact, sans-serif;
+            font-size: 1.3rem;
+            color: #6a4a5a;
+            margin-bottom: 15px;
+            text-transform: lowercase;
+        }
+
+        .result-card {
+            border: 3px solid #8a6a7a;
+            margin-bottom: 20px;
+            background: #f9f4f6;
+        }
+
+        .result-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .share-text {
+            font-size: 0.9rem;
+            color: #6a4a5a;
+            margin-bottom: 10px;
+        }
+
+        .btn-instagram {
+            background: #b05a7a;
+            color: white;
+            display: inline-block;
+            width: auto;
+            padding: 12px 25px;
+            border-color: #8a4a60;
+        }
+
+        .btn-restart {
+            background-color: #c9b3c0;
+            color: #4a3a45;
+            margin-top: 15px;
+            font-size: 1rem;
+            border-color: #9a8a90;
+        }
+
+        /* Loading */
+        .result-card.loading {
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-card.loading::after {
+            content: "a carregar...";
+            font-family: 'Comic Sans MS', cursive;
+            color: #8a6a7a;
+        }
+
+        .result-card.loading img {
+            display: none;
+        }
+
+        /* Extra tacky decorations */
+        .sparkle {
+            color: #c9a060; /* muted gold */
+            font-size: 1.5rem;
+        }
+
+        .tiny-hearts {
+            color: #b07080;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            opacity: 0.8;
+        }
+
+        /* Mobile-first: these are the defaults, desktop gets adjusted up */
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px 12px;
+            }
+            .title {
+                font-size: 1.8rem;
+            }
+            .question-text {
+                font-size: 1.2rem;
+            }
+            .btn {
+                font-size: 1.1rem;
+                padding: 16px 15px;
+            }
+            .btn-start {
+                font-size: 1.3rem;
+            }
+            .heart {
+                font-size: 24px;
+            }
+        }
+
+        /* Larger phones */
+        @media (min-width: 401px) and (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            .question-text {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Prevent horizontal scroll */
+        html, body {
+            overflow-x: hidden;
+            max-width: 100vw;
+        }
+
+        /* Falling hearts animation */
+        .falling-heart {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            animation: fall linear forwards;
+            opacity: 0.75;
+        }
+
+        /* Pastel color classes for hearts */
+        .heart-blue { filter: invert(83%) sepia(15%) saturate(600%) hue-rotate(180deg) brightness(1.05); }
+        .heart-green { filter: invert(85%) sepia(20%) saturate(500%) hue-rotate(95deg) brightness(1.05); }
+        .heart-orange { filter: invert(80%) sepia(40%) saturate(600%) hue-rotate(340deg) brightness(1.1); }
+        .heart-purple { filter: invert(70%) sepia(30%) saturate(500%) hue-rotate(240deg) brightness(1.1); }
+        .heart-yellow { filter: invert(90%) sepia(50%) saturate(500%) hue-rotate(10deg) brightness(1.1); }
+        .heart-pink { filter: invert(75%) sepia(30%) saturate(600%) hue-rotate(280deg) brightness(1.1); }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(var(--rotation, 360deg));
+                opacity: 0;
+            }
+        }
+
+        /* Container needs to be above falling hearts */
+        .container {
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Ugly hearts -->
+        <span class="heart heart-1">❤</span>
+        <span class="heart heart-2">❤</span>
+        <span class="heart heart-3">❤</span>
+        <span class="heart heart-4">❤</span>
+        <span class="heart heart-5">❤</span>
+        <span class="heart heart-6">❤</span>
+
+        <!-- Intro Screen -->
+        <div id="intro" class="screen active">
+            <div class="tiny-hearts">❤ ❤ ❤ ❤ ❤</div>
+            <h1 class="title"><span class="sparkle">★</span> Miocárdio <span class="sparkle">★</span></h1>
+            <p class="subtitle">~ o quiz do amor ~</p>
+            <p class="tagline">descobre qual é o teu cartão do amor...</p>
+            <div class="tiny-hearts">❤ ❤ ❤ ❤ ❤</div>
+            <br>
+            <button class="btn btn-start" onclick="startQuiz()">COMEÇAR ❤</button>
+        </div>
+
+        <!-- Question 1 -->
+        <div id="question1" class="screen">
+            <p class="question-number">pergunta 1 de 3</p>
+            <div class="tiny-hearts">❤ ❤ ❤</div>
+            <h2 class="question-text">Pergunta A vai aqui?</h2>
+            <button class="btn btn-positive" onclick="answer(0, 1)">SIM ❤</button>
+            <button class="btn btn-negative" onclick="answer(0, 0)">NÃO 💔</button>
+        </div>
+
+        <!-- Question 2 -->
+        <div id="question2" class="screen">
+            <p class="question-number">pergunta 2 de 3</p>
+            <div class="tiny-hearts">❤ ❤ ❤</div>
+            <h2 class="question-text">Pergunta B vai aqui?</h2>
+            <button class="btn btn-positive" onclick="answer(1, 1)">SIM ❤</button>
+            <button class="btn btn-negative" onclick="answer(1, 0)">NÃO 💔</button>
+        </div>
+
+        <!-- Question 3 -->
+        <div id="question3" class="screen">
+            <p class="question-number">pergunta 3 de 3</p>
+            <div class="tiny-hearts">❤ ❤ ❤</div>
+            <h2 class="question-text">Pergunta C vai aqui?</h2>
+            <button class="btn btn-positive" onclick="answer(2, 1)">SIM ❤</button>
+            <button class="btn btn-negative" onclick="answer(2, 0)">NÃO 💔</button>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="result" class="screen">
+            <p class="result-title"><span class="sparkle">★</span> o teu cartão: <span class="sparkle">★</span></p>
+            <div class="result-card loading" id="resultCard">
+                <img id="resultImage" src="" alt="O teu cartão do amor" onload="this.parentElement.classList.remove('loading')">
+            </div>
+            <p class="share-text">partilha o teu resultado!!</p>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="btn btn-instagram">
+                Partilhar no Instagram
+            </a>
+            <button class="btn btn-restart" onclick="restart()">jogar outra vez ❤</button>
+        </div>
+    </div>
+
+    <script>
+        const answers = [0, 0, 0];
+        const screens = ['intro', 'question1', 'question2', 'question3', 'result'];
+        let currentScreen = 0;
+
+        function showScreen(index) {
+            screens.forEach((id, i) => {
+                document.getElementById(id).classList.toggle('active', i === index);
+            });
+            currentScreen = index;
+        }
+
+        function startQuiz() {
+            answers[0] = 0;
+            answers[1] = 0;
+            answers[2] = 0;
+            showScreen(1);
+        }
+
+        function answer(questionIndex, value) {
+            answers[questionIndex] = value;
+            if (questionIndex < 2) {
+                showScreen(currentScreen + 1);
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const cardNumber = (answers[0] * 4) + (answers[1] * 2) + answers[2] + 1;
+            const img = document.getElementById('resultImage');
+            const card = document.getElementById('resultCard');
+            card.classList.add('loading');
+            img.src = '{{ "/assets/images/miocardio/card-" | relative_url }}' + cardNumber + '.jpg';
+            showScreen(4);
+        }
+
+        function restart() {
+            showScreen(0);
+        }
+
+        // Falling hearts animation
+        const HEART_COUNT = 13;
+        const SPAWN_INTERVAL = 250; // ms between spawns (faster!)
+        const HEARTS_PATH = '{{ "/assets/images/miocardio/hearts/" | relative_url }}';
+        const PASTEL_COLORS = ['heart-blue', 'heart-green', 'heart-orange', 'heart-purple', 'heart-yellow', 'heart-pink'];
+
+        function spawnHeart() {
+            const heart = document.createElement('img');
+            const designNum = Math.floor(Math.random() * HEART_COUNT) + 1;
+            const colorClass = PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)];
+
+            heart.src = HEARTS_PATH + designNum + '.png';
+            heart.className = 'falling-heart ' + colorClass;
+
+            // Random properties
+            const size = 30 + Math.random() * 50; // 30-80px
+            const duration = 4 + Math.random() * 4; // 4-8 seconds
+            const xPos = Math.random() * 100; // 0-100% from left
+            const rotation = (Math.random() - 0.5) * 720; // -360 to 360 deg
+
+            heart.style.width = size + 'px';
+            heart.style.height = 'auto';
+            heart.style.left = xPos + '%';
+            heart.style.top = '-100px';
+            heart.style.setProperty('--rotation', rotation + 'deg');
+            heart.style.animationDuration = duration + 's';
+
+            document.body.appendChild(heart);
+
+            // Remove after animation ends
+            setTimeout(() => {
+                heart.remove();
+            }, duration * 1000 + 100);
+        }
+
+        // Start spawning hearts
+        setInterval(spawnHeart, SPAWN_INTERVAL);
+        // Spawn a few immediately
+        for (let i = 0; i < 5; i++) {
+            setTimeout(spawnHeart, i * 100);
+        }
+    </script>
+</body>
+</html>
